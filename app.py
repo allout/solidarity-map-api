@@ -14,11 +14,9 @@ def get_eve_app():
     :param config: Configuration dictionary
     :return: app
     """
-    # init eve
-    settings_file = os.environ.get('EVE_SETTINGS_FILE', 'settings/local.py')
-    print(f'SETTINGS FILE: {settings_file}')
-    eve_app = Eve(settings=settings_file)
-    return eve_app
+    EVE_SETTINGS = os.environ.get('EVE_SETTINGS', 'settings/local.py')
+    abs_settings_path = os.path.join(current_path, EVE_SETTINGS)
+    return Eve(settings=abs_settings_path)
 
 
 if __name__ == '__main__':
