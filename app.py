@@ -1,10 +1,25 @@
 #!/usr/bin/env python
+import bcrypt
+import importlib
 import os
 import sys
-from eve import Eve
+from eve import Eve, auth
+from hashlib import sha256
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, 'settings'))
+CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(CURRENT_PATH, 'settings'))
+EVE_SETTINGS = os.environ.get('EVE_SETTINGS', 'settings/local.py')
+EVE_SETTINGS_ROOT, _ = os.path.splitext(EVE_SETTINGS)
+EVE_SETTINGS_PROFILE = os.path.basename(EVE_SETTINGS_ROOT)
+ABS_SETTINGS_PATH = os.path.join(CURRENT_PATH, EVE_SETTINGS)
+
+# Allow current settings to be available to this code
+settings = importlib.import_module(f'settings.{EVE_SETTINGS_PROFILE}')
+
+
+class BasicAuth(auth.BasicAuth):
+    def check_auth(self, username, password, allowed_roles, resource, method):
+        return username == settings.API_USER and password == settings.API_PASSWORD
 
 
 def get_eve_app():
@@ -14,9 +29,7 @@ def get_eve_app():
     :param config: Configuration dictionary
     :return: app
     """
-    EVE_SETTINGS = os.environ.get('EVE_SETTINGS', 'settings/local.py')
-    abs_settings_path = os.path.join(current_path, EVE_SETTINGS)
-    return Eve(settings=abs_settings_path)
+    return Eve(settings=ABS_SETTINGS_PATH, auth=BasicAuth)
 
 
 if __name__ == '__main__':
