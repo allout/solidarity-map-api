@@ -15,7 +15,9 @@ def get_eve_app():
     :return: app
     """
     # init eve
-    eve_app = Eve(settings=os.environ.get('EVE_SETTINGS_FILE', 'settings/local.py'))
+    settings_file = os.environ.get('EVE_SETTINGS_FILE', 'settings/local.py')
+    print(f'SETTINGS FILE: {settings_file}')
+    eve_app = Eve(settings=settings_file)
     return eve_app
 
 

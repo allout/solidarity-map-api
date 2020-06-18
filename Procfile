@@ -1,1 +1,1 @@
-web: gunicorn 'app:get_eve_app()'
+web: gunicorn 'app:get_eve_app()' --workers 3 --capture-output --log-level debug
