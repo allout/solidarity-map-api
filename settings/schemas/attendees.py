@@ -6,7 +6,7 @@ schema = {
     'firstName': {'type': 'string', 'minlength': 0, 'maxlength': 100,},
     'lastName': {'type': 'string', 'minlength': 0, 'maxlength': 100,},
     'subscriptionCountry': {'type': 'string', 'minlength': 2, 'maxlength': 2},
-    'solidarityCountry': {'type': 'string', 'minlength': 2, 'maxlength': 2},
+    'solidarityCountry': {'type': 'string', 'minlength': 0, 'maxlength': 2},
     'emojiIndices': {'type': 'list'},
 }
 
