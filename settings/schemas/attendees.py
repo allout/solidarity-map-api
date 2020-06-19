@@ -1,10 +1,11 @@
 schema = {
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
     # (https://github.com/pyeve/cerberus) for details.
-    'lat': {'type': 'number', 'min': -90, 'max': 90},
-    'lng': {'type': 'number', 'min': -180, 'max': 180},
-    'firstName': {'type': 'string', 'minlength': 0, 'maxlength': 100,},
-    'lastName': {'type': 'string', 'minlength': 0, 'maxlength': 100,},
+    'lat': {'type': 'number', 'min': -90, 'max': 90, 'required': True},
+    'lng': {'type': 'number', 'min': -180, 'max': 180, 'required': True},
+    'email': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
+    'firstName': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
+    'lastName': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
     'subscriptionCountry': {'type': 'string', 'minlength': 2, 'maxlength': 2},
     'solidarityCountry': {'type': 'string', 'minlength': 0, 'maxlength': 2},
     'emojiIndices': {'type': 'list'},
