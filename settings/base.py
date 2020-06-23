@@ -2,13 +2,17 @@ import os
 from environs import Env
 
 from schemas.attendees import attendees
+from schemas.attendees_totals import attendees_totals
 
 env = Env()
 
 URL_PREFIX = 'api'
 API_VERSION = 'v1'
 
-DOMAIN = {'attendees': attendees}
+DOMAIN = {
+    'attendees': attendees,
+    'attendees_totals': attendees_totals,
+}
 
 MONGO_DBNAME = 'solidarity-map'
 

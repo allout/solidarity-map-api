@@ -26,4 +26,5 @@ attendees = {
     'resource_methods': ['GET', 'POST'],
     'item_methods': ['GET', 'PATCH', 'PUT'],
     'schema': schema,
+    'mongo_indexes': {'solidarityCountry_index': [('solidarityCountry', 1)]},
 }
