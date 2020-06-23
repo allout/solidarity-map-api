@@ -17,6 +17,6 @@ attendees_totals = {
         },
     },
     'resource_methods': ['GET'],
-    'cache_control': 'max-age=300',
-    'cache_expires': 300,
+    'cache_control': 'max-age=120',
+    'cache_expires': 120,
 }
