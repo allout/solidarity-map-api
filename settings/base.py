@@ -38,3 +38,5 @@ if RECAPTCHA_ENABLED and not RECAPTCHA_SECRET_KEY:
     raise ValueError(
         'RECAPTCHA_SECRET_KEY must be provided if RECAPTCHA_ENABLED is set'
     )
+
+LOG_LEVEL = env.str('LOG_LEVEL', default='INFO').upper()

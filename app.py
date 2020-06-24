@@ -9,9 +9,6 @@ from eve import Eve, auth
 from flask import abort
 from hashlib import sha256
 
-logging.basicConfig()
-logger = logging.getLogger(__name__)
-
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(CURRENT_PATH, 'settings'))
 EVE_SETTINGS = os.environ.get('EVE_SETTINGS', 'settings/local.py')
@@ -21,6 +18,11 @@ ABS_SETTINGS_PATH = os.path.join(CURRENT_PATH, EVE_SETTINGS)
 
 # Allow current settings to be available to this code
 imported_settings = importlib.import_module(f'settings.{EVE_SETTINGS_PROFILE}')
+
+
+logging.basicConfig()
+logger = logging.getLogger(__name__)
+logger.setLevel(getattr(logging, imported_settings.LOG_LEVEL))
 
 
 class BasicAuth(auth.BasicAuth):
