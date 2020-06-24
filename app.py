@@ -28,16 +28,17 @@ class BasicAuth(auth.BasicAuth):
 
 
 def recaptcha_hook(resource, request, lookup=None):
+    recaptcha_payload = {
+        'response': request.json.pop('gRecaptchaResponse', None),
+        'secret': imported_settings.RECAPTCHA_SECRET_KEY,
+    }
+    app.logger.debug(recaptcha_payload)
     recaptcha_response = requests.post(
-        'https://www.google.com/recaptcha/api/siteverify',
-        {
-            'response': request.json.pop('gRecaptchaResponse', None),
-            'secret': imported_settings.RECAPTCHA_SECRET_KEY,
-        },
+        'https://www.google.com/recaptcha/api/siteverify', recaptcha_payload,
     )
     response_text = json.loads(recaptcha_response.text)
     if not response_text['success']:
-        print(response_text)
+        app.logger.debug(response_text)
         abort(403)
 
 
@@ -56,7 +57,9 @@ def get_eve_app():
     return app
 
 
+app = get_eve_app()
+
+
 if __name__ == '__main__':
     # Main entry point when run in stand-alone mode.
-    app = get_eve_app()
     app.run(debug=True)
