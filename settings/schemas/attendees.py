@@ -27,4 +27,7 @@ attendees = {
     'item_methods': ['GET', 'PATCH', 'PUT'],
     'schema': schema,
     'mongo_indexes': {'solidarityCountry_index': [('solidarityCountry', 1)]},
+    'datasource': {
+        'projection': {'lat': 1, 'lng': 1, 'emojiIndices': 1, 'solidarityCountry': 1}
+    },
 }

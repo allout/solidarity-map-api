@@ -40,3 +40,12 @@ if RECAPTCHA_ENABLED and not RECAPTCHA_SECRET_KEY:
     )
 
 LOG_LEVEL = env.str('LOG_LEVEL', default='INFO').upper()
+
+# Pagination config
+###################
+# Maximum number of records that can be fetched at one time
+PAGINATION_LIMIT = 100
+# Default page size
+PAGINATION_DEFAULT = 100
+# Switch off filtering by default. FIltering is enabled at an endpoint level
+ALLOWED_FILTERS = []
