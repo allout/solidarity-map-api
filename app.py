@@ -32,7 +32,7 @@ def recaptcha_hook(resource_name, items, original=None):
         response = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
             {
-                'response': item.get('g_recaptcha_response', None),
+                'response': item.get('gRecaptchaResponse', None),
                 'secret': imported_settings.RECAPTCHA_SECRET_KEY,
             },
         )
