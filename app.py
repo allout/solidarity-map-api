@@ -27,20 +27,18 @@ class BasicAuth(auth.BasicAuth):
         )
 
 
-def recaptcha_hook(resource_name, items, original=None):
-    for item in items:
-        response = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            {
-                'response': item.pop('gRecaptchaResponse', None),
-                'secret': imported_settings.RECAPTCHA_SECRET_KEY,
-            },
-        )
-        response_text = json.loads(response.text)
-        if not response_text['success']:
-            print(response_text)
-            abort(403)
-            break
+def recaptcha_hook(resource, request, lookup=None):
+    recaptcha_response = requests.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+            'response': request.json.pop('gRecaptchaResponse', None),
+            'secret': imported_settings.RECAPTCHA_SECRET_KEY,
+        },
+    )
+    response_text = json.loads(recaptcha_response.text)
+    if not response_text['success']:
+        print(response_text)
+        abort(403)
 
 
 def get_eve_app():
@@ -52,9 +50,9 @@ def get_eve_app():
     """
     app = Eve(settings=ABS_SETTINGS_PATH, auth=BasicAuth)
     if imported_settings.RECAPTCHA_ENABLED:
-        app.on_insert = recaptcha_hook
-        app.on_replace = recaptcha_hook
-        app.on_update = recaptcha_hook
+        app.on_pre_POST = recaptcha_hook
+        app.on_pre_PATCH = recaptcha_hook
+        app.on_pre_PUT = recaptcha_hook
     return app
 
 
