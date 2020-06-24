@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 import importlib
 import json
+import logging
 import os
 import requests
 import sys
 from eve import Eve, auth
 from flask import abort
 from hashlib import sha256
+
+logging.basicConfig()
+logger = logging.getLogger(__name__)
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(CURRENT_PATH, 'settings'))
@@ -32,13 +36,13 @@ def recaptcha_hook(resource, request, lookup=None):
         'response': request.json.pop('gRecaptchaResponse', None),
         'secret': imported_settings.RECAPTCHA_SECRET_KEY,
     }
-    app.logger.debug(recaptcha_payload)
+    logger.debug(recaptcha_payload)
     recaptcha_response = requests.post(
         'https://www.google.com/recaptcha/api/siteverify', recaptcha_payload,
     )
     response_text = json.loads(recaptcha_response.text)
     if not response_text['success']:
-        app.logger.debug(response_text)
+        logger.debug(response_text)
         abort(403)
 
 
@@ -62,4 +66,5 @@ app = get_eve_app()
 
 if __name__ == '__main__':
     # Main entry point when run in stand-alone mode.
+    logger.setLevel(logging.DEBUG)
     app.run(debug=True)
