@@ -30,3 +30,11 @@ API_PASSWORD = env.str('API_PASSWORD', default='JY9^QUfNt}+HuDfgvJ62')
 # Enable reads (GET), edits (PATCH), replacements (PUT) and deletes of
 # individual items  (defaults to read-only item access).
 # ITEM_METHODS = ['GET', 'PATCH', 'PUT']
+
+RECAPTCHA_ENABLED = env.bool('RECAPTCHA_ENABLED', default=False)
+RECAPTCHA_SECRET_KEY = env.str('RECAPTCHA_SECRET_KEY', default='')
+
+if RECAPTCHA_ENABLED and not RECAPTCHA_SECRET_KEY:
+    raise ValueError(
+        'RECAPTCHA_SECRET_KEY must be provided if RECAPTCHA_ENABLED is set'
+    )

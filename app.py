@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import importlib
+import json
 import os
+import requests
 import sys
 from eve import Eve, auth
+from flask import abort
 from hashlib import sha256
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -13,12 +16,31 @@ EVE_SETTINGS_PROFILE = os.path.basename(EVE_SETTINGS_ROOT)
 ABS_SETTINGS_PATH = os.path.join(CURRENT_PATH, EVE_SETTINGS)
 
 # Allow current settings to be available to this code
-settings = importlib.import_module(f'settings.{EVE_SETTINGS_PROFILE}')
+imported_settings = importlib.import_module(f'settings.{EVE_SETTINGS_PROFILE}')
 
 
 class BasicAuth(auth.BasicAuth):
     def check_auth(self, username, password, allowed_roles, resource, method):
-        return username == settings.API_USER and password == settings.API_PASSWORD
+        return (
+            username == imported_settings.API_USER
+            and password == imported_settings.API_PASSWORD
+        )
+
+
+def recaptcha_hook(resource_name, items, original=None):
+    for item in items:
+        response = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            {
+                'response': item.get('g_recaptcha_response', None),
+                'secret': imported_settings.RECAPTCHA_SECRET_KEY,
+            },
+        )
+        response_text = json.loads(response.text)
+        if not response_text['success']:
+            print(response_text)
+            abort(403)
+            break
 
 
 def get_eve_app():
@@ -28,7 +50,12 @@ def get_eve_app():
     :param config: Configuration dictionary
     :return: app
     """
-    return Eve(settings=ABS_SETTINGS_PATH, auth=BasicAuth)
+    app = Eve(settings=ABS_SETTINGS_PATH, auth=BasicAuth)
+    if imported_settings.RECAPTCHA_ENABLED:
+        app.on_insert = recaptcha_hook
+        app.on_replace = recaptcha_hook
+        app.on_update = recaptcha_hook
+    return app
 
 
 if __name__ == '__main__':
