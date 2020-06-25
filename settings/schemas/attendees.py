@@ -28,7 +28,8 @@ attendees = {
     'schema': schema,
     'mongo_indexes': {'solidarityCountry_index': [('solidarityCountry', 1)]},
     'pagination': True,
-    'allowed_filters': [],
+    'mongo_query_whitelist': ['$where'],
+    'allowed_filters': ['lat', 'lng'],
     'datasource': {
         'projection': {'lat': 1, 'lng': 1, 'emojiIndices': 1, 'solidarityCountry': 1}
     },

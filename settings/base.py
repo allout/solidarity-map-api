@@ -47,5 +47,5 @@ LOG_LEVEL = env.str('LOG_LEVEL', default='INFO').upper()
 PAGINATION_LIMIT = 100
 # Default page size
 PAGINATION_DEFAULT = 100
-# Switch off filtering by default. FIltering is enabled at an endpoint level
+# Switch off filtering by default. Filtering is enabled at an endpoint level
 ALLOWED_FILTERS = []
