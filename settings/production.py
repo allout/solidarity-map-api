@@ -5,7 +5,7 @@ from base import *
 env = Env()
 
 # DB connection
-MONGO_URI = env.str('MONGO_URI')
+MONGO_URI = env.str('MONGODB_URI')
 
 # CORS whitelist for client domains.
 # This can be an env var which contains a comma separated list of domains allowed to make requests of this server
