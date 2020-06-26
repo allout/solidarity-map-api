@@ -29,7 +29,7 @@ attendees = {
     'mongo_indexes': {'solidarityCountry_index': [('solidarityCountry', 1)]},
     'pagination': True,
     'mongo_query_whitelist': ['$where'],
-    'allowed_filters': ['lat', 'lng'],
+    'allowed_filters': ['lat', 'lng', '_id'],
     'datasource': {
         'projection': {'lat': 1, 'lng': 1, 'emojiIndices': 1, 'solidarityCountry': 1}
     },
