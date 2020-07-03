@@ -4,6 +4,7 @@ schema = {
     'lat': {'type': 'number', 'min': -90, 'max': 90, 'required': True},
     'lng': {'type': 'number', 'min': -180, 'max': 180, 'required': True},
     'email': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
+    'locale': {'type': 'string', 'minlength': 2, 'maxlength': 5,},
     'firstName': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
     'lastName': {'type': 'string', 'minlength': 0, 'maxlength': 50,},
     'subscriptionCountry': {'type': 'string', 'minlength': 2, 'maxlength': 2},
