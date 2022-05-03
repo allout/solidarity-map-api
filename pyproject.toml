@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "solidarity-map-api"
+version = "0.1.0"
+description = ""
+authors = ["Tim Godfrey <timmygee@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Eve = "1.1.1"
+environs = "^9.5.0"
+requests = "^2.27.1"
+gunicorn = "^20.1.0"
+pymongo = {extras = ["srv"], version = "^4.1.1"}
+
+[tool.poetry.dev-dependencies]
+ipdb = "^0.13.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
