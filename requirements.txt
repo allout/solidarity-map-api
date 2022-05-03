@@ -1,2 +1,0 @@
-# This is the requirements file that heroku needs
--r requirements/production.txt
