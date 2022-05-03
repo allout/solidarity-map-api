@@ -5,7 +5,7 @@ description = ""
 authors = ["Tim Godfrey <timmygee@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
-python = "3.8.13"
+3.8.13"
 Eve = "1.1.1"
 environs = "^9.5.0"
 requests = "^2.27.1"
