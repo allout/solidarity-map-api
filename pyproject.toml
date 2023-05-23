@@ -8,7 +8,7 @@ authors = ["Tim Godfrey <timmygee@users.noreply.github.com>"]
 python = "3.8.13"
 Eve = "1.1.1"
 environs = "^9.5.0"
-requests = "^2.27.1"
+requests = "^2.31.0"
 gunicorn = "^20.1.0"
 pymongo = {extras = ["srv"], version = "^4.1.1"}
 
